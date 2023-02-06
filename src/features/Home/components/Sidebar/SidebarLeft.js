@@ -2,9 +2,6 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { NavLink, useParams } from 'react-router-dom'
 import PerfectScrollbar from 'react-perfect-scrollbar'
-import useQuery from 'src/hooks/useQuery'
-import SVG from 'react-inlinesvg'
-import { AssetsHelpers } from 'src/helpers/AssetsHelpers'
 import clsx from 'clsx'
 
 const perfectScrollbarOptions = {
@@ -12,10 +9,53 @@ const perfectScrollbarOptions = {
   wheelPropagation: false
 }
 
-function NavItems({ cate, onChangeCate, CateActive }) {
+const roman = {
+  1: 'I',
+  2: 'II',
+  3: 'III',
+  4: 'IV',
+  5: 'V',
+  6: 'VI',
+  7: 'VII',
+  8: 'VIII',
+  9: 'IX',
+  10: 'X',
+  20: 'XX',
+  30: 'XXX',
+  40: 'XL',
+  50: 'L',
+  60: 'LX',
+  70: 'LXX',
+  80: 'LXXX',
+  90: 'XC',
+  100: 'C',
+  200: 'CC',
+  300: 'CCC',
+  400: 'CD',
+  500: 'D',
+  600: 'DC',
+  700: 'DCC',
+  800: 'DCCC',
+  900: 'CM',
+  1000: 'M',
+  2000: 'MM',
+  3000: 'MMM'
+}
+const convertRoman = natural => {
+  let str = String(natural).split('')
+  let result = ''
+  for (let i = 0; i < str.length; i++) {
+    var lookup = str[i] * Math.pow(10, str.length - i - 1)
+    if (roman[lookup]) {
+      result += roman[lookup]
+    }
+  }
+  return result
+}
+
+function NavItems({ cate, onChangeCate, CateActive, STT }) {
   const [active, setActive] = useState(false)
-  const { slug } = useParams()
-  const { id } = useQuery()
+  const { slug, cate: cates, cateid } = useParams()
 
   useEffect(() => {
     if (cate.Items) {
@@ -41,30 +81,31 @@ function NavItems({ cate, onChangeCate, CateActive }) {
       className={clsx(CateActive === cate.slug && 'active', active && 'active')}
     >
       <NavLink to="#" onClick={() => onChangeActive(cate)}>
-        <span className="svg-icon">
+        {/* <span className="svg-icon">
           <SVG
             src={AssetsHelpers.toAbsoluteUrl(
               '/media/svg/icons/Design/Layers.svg'
             )}
           />
+        </span> */}
+
+        <span className="text">
+          <span className="number font-lating">{convertRoman(STT + 1)}.</span>
+          {cate.name}
         </span>
-        <span className="text">{cate.name}</span>
         <i className="menu-arrow"></i>
       </NavLink>
       <ul>
         {cate.Items &&
           cate.Items.map((item, idx) => (
             <li key={idx}>
-              <NavLink
-                className={({ isActive }) => (isActive ? 'active' : '')}
-                to={`${cate.slug}/${item.slug}.html${id ? '?id=' + id : ''}`}
-              >
-                <i className="menu-bullet menu-bullet-dot">
+              <NavLink to={`${cates}-${cateid}/${cate.slug}/${item.slug}.html`}>
+                {/* <i className="menu-bullet menu-bullet-dot">
                   <span></span>
-                </i>
+                </i> */}
                 <span
                   dangerouslySetInnerHTML={{
-                    __html: `${idx + 1}. ${item?.title.rendered}`
+                    __html: item?.title.rendered
                   }}
                 ></span>
               </NavLink>
@@ -99,6 +140,7 @@ function SidebarLeft(props) {
           {PostsList &&
             PostsList.map((cate, index) => (
               <NavItems
+                STT={index}
                 cate={cate}
                 key={index}
                 onChangeCate={onChangeCate}

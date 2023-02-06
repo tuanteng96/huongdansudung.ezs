@@ -15,6 +15,11 @@ const postsApi = {
   },
   getCateID: id => {
     return http.get(`/wp-json/wp/v2/categories/${id}`)
+  },
+  getPostKey: key => {
+    return http.get(
+      `/wp-json/wp/v2/posts/?search=${key}&categories=21&_embed=wp:term`
+    )
   }
 }
 export default postsApi

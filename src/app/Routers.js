@@ -6,32 +6,23 @@ import DetailPost from 'src/features/Home/pages/DetailPost'
 
 function Routers(props) {
   const [UrlHome, setUrlHome] = useState('')
-  const { PostsList } = useSelector(({ posts }) => ({
-    PostsList: posts.PostsList
+  const { PostsCate } = useSelector(({ posts }) => ({
+    PostsCate: posts.PostsCate
   }))
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search)
-    const id = urlParams.get('id')
-    if (
-      PostsList &&
-      PostsList.length > 0 &&
-      PostsList[0].Items &&
-      PostsList[0].Items.length > 0
-    ) {
-      setUrlHome(
-        `${PostsList[0].slug}/${PostsList[0].Items[0].slug}.html${
-          id ? '?id=' + id : ''
-        }`
-      )
+    if (PostsCate && PostsCate.length > 0) {
+      setUrlHome(`${PostsCate[0].slug}-${PostsCate[0].id}`)
     }
-  }, [PostsList])
+  }, [PostsCate])
 
   return (
     <Routes>
       <Route path="/" element={<Home />}>
         {UrlHome && <Route index element={<Navigate to={UrlHome} replace />} />}
-        <Route path=":cate/:slug.html" element={<DetailPost />} />
+        <Route path=":cate-:cateid" element={<DetailPost />}>
+          <Route path=":slugcate/:slug.html" element={<DetailPost />} />
+        </Route>
       </Route>
     </Routes>
   )
