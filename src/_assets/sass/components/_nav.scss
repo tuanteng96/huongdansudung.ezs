@@ -55,30 +55,34 @@
                 background-color: rgba(77, 89, 149, 0.06);
                 color: #3699FF;
             }
-            ul {
+            .nav-menu-sub {
                 display: block;
                 -webkit-animation: header-menu-submenu-fade-in 0.3s ease 1, header-menu-submenu-move-down 0.3s ease-out 1;
                 animation: header-menu-submenu-fade-in 0.3s ease 1, header-menu-submenu-move-down 0.3s ease-out 1;
             }
         }
-        ul {
-            list-style: none;
-            position: absolute;
-            margin: 0;
-            padding: 10px 0px;
+        .nav-menu-sub {
+            display: none;
+            position: absolute !important;
             top: 100%;
             z-index: 3;
             background: #fff;
             -webkit-box-shadow: 0px 15px 50px 0px rgb(82 63 105 / 15%);
             box-shadow: 0px 15px 50px 0px rgb(82 63 105 / 15%);
             border-radius: 4px;
-            width: 200px;
-            display: none;
+            padding: 10px 0px;
+            width: 250px;
+            height: 300px;
+        }
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
             li {
                 padding: 0;
                 display: block;
                 a {
-                    font-weight: 600;
+                    font-weight: 500;
                 }
             }
         }

@@ -3,6 +3,12 @@ import React, { useState, Fragment } from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import { NavLink, useParams } from 'react-router-dom'
+import PerfectScrollbar from 'react-perfect-scrollbar'
+
+const perfectScrollbarOptions = {
+  wheelSpeed: 2,
+  wheelPropagation: false
+}
 
 function Navbar(props) {
   const { PostsCate } = useSelector(({ posts }) => ({
@@ -51,24 +57,30 @@ function Navbar(props) {
             >
               Xem thêm <i className="fa-regular fa-angle-down"></i>
             </div>
-            <ul>
-              {PostsCate.slice(CountSlice, PostsCate.length).map(
-                (item, index) => (
-                  <li key={index}>
-                    <NavLink
-                      to={`/${item.slug}-${item.id}`}
-                      //className={clsx(cate === item.slug && 'active')}
-                    >
-                      <span
-                        dangerouslySetInnerHTML={{
-                          __html: item?.name
-                        }}
-                      ></span>
-                    </NavLink>
-                  </li>
-                )
-              )}
-            </ul>
+            <PerfectScrollbar
+              options={perfectScrollbarOptions}
+              className="scroll nav-menu-sub"
+              style={{ position: 'relative' }}
+            >
+              <ul>
+                {PostsCate.slice(CountSlice, PostsCate.length).map(
+                  (item, index) => (
+                    <li key={index}>
+                      <NavLink
+                        to={`/${item.slug}-${item.id}`}
+                        //className={clsx(cate === item.slug && 'active')}
+                      >
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: item?.name
+                          }}
+                        ></span>
+                      </NavLink>
+                    </li>
+                  )
+                )}
+              </ul>
+            </PerfectScrollbar>
           </li>
         )}
       </ul>

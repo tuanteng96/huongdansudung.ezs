@@ -90,7 +90,9 @@ function PostSearch(props) {
                     <div
                       onClick={() => {
                         navigate(
-                          `/${item.cate[0].slug}-${item.cate[0].id}/${item.cate[1].slug}/${item.slug}.html`
+                          `/${item.cate[item.cate.length - 1].slug}-${
+                            item.cate[item.cate.length - 1].id
+                          }/${item.slug}.html`
                         )
                         setShow(false)
                         setList(false)

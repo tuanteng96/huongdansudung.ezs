@@ -28,10 +28,13 @@ function DetailPost(props) {
   }, [cateid, dispatch])
 
   useEffect(() => {
-    if (!slug && PostsList && PostsList.length > 0) {
-      navigate(
-        `/${cate}-${cateid}/${PostsList[0].slug}/${PostsList[0].Items[0].slug}.html`
-      )
+    if (
+      !slug &&
+      PostsList &&
+      PostsList.length > 0 &&
+      PostsList[0].Items.length > 0
+    ) {
+      navigate(`/${cate}-${cateid}/${PostsList[0].Items[0].slug}.html`)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug, PostsList])

@@ -80,7 +80,8 @@ function NavItems({ cate, onChangeCate, CateActive, STT }) {
     <li
       className={clsx(CateActive === cate.slug && 'active', active && 'active')}
     >
-      <NavLink to="#" onClick={() => onChangeActive(cate)}>
+      {/* onClick={() => onChangeActive(cate)} */}
+      <NavLink to={`${cate.slug}-${cate.id}`}>
         {/* <span className="svg-icon">
           <SVG
             src={AssetsHelpers.toAbsoluteUrl(
@@ -99,7 +100,7 @@ function NavItems({ cate, onChangeCate, CateActive, STT }) {
         {cate.Items &&
           cate.Items.map((item, idx) => (
             <li key={idx}>
-              <NavLink to={`${cates}-${cateid}/${cate.slug}/${item.slug}.html`}>
+              <NavLink to={`${cates}-${cateid}/${item.slug}.html`}>
                 {/* <i className="menu-bullet menu-bullet-dot">
                   <span></span>
                 </i> */}

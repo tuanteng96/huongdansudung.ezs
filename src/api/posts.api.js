@@ -4,6 +4,9 @@ const postsApi = {
   getListPostsID: id => {
     return http.get(`/wp-json/wp/v2/posts?categories=${id}&per_page=100`)
   },
+  getListPostsSlug: id => {
+    return http.get(`/wp-json/wp/v2/posts?categories=${id}&per_page=100`)
+  },
   getPostID: id => {
     return http.get(`/wp-json/wp/v2/posts/${id}`)
   },
@@ -15,6 +18,9 @@ const postsApi = {
   },
   getCateID: id => {
     return http.get(`/wp-json/wp/v2/categories/${id}`)
+  },
+  getCateSlug: slug => {
+    return http.get(`/wp-json/wp/v2/categories?slug=${slug}`)
   },
   getPostKey: key => {
     return http.get(

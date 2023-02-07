@@ -21,7 +21,7 @@ function Routers(props) {
       <Route path="/" element={<Home />}>
         {UrlHome && <Route index element={<Navigate to={UrlHome} replace />} />}
         <Route path=":cate-:cateid" element={<DetailPost />}>
-          <Route path=":slugcate/:slug.html" element={<DetailPost />} />
+          <Route path=":slug.html" element={<DetailPost />} />
         </Route>
       </Route>
     </Routes>
