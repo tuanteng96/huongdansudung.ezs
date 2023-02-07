@@ -62,7 +62,7 @@ function DetailPost(props) {
       {
         <Fragment>
           <div className="title-top justify-content-between">
-            <div>
+            <div className="h-100 d-flex">
               <Navbar />
             </div>
             <div className="d-flex">
