@@ -34,7 +34,9 @@ const Posts = createSlice({
   name: 'posts',
   initialState: {
     PostsCate: null,
-    PostsList: null
+    PostsList: null,
+    LoadingList: false,
+    LoadingCate: false
   },
   reducers: {},
   extraReducers: {
@@ -44,10 +46,14 @@ const Posts = createSlice({
         PostsCate: payload
       }
     },
+    [getListPostsID.pending]: state => {
+      state.LoadingList = true
+    },
     [getListPostsID.fulfilled]: (state, { payload }) => {
       return {
         ...state,
-        PostsList: payload
+        PostsList: payload,
+        LoadingList: false
       }
     }
   }

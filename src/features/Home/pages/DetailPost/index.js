@@ -10,8 +10,9 @@ import { getListPostsID } from '../../HomeSlice'
 import PostSearch from '../../components/PostSearch/PostSearch'
 
 function DetailPost(props) {
-  const { PostsList } = useSelector(({ posts }) => ({
-    PostsList: posts.PostsList
+  const { PostsList, LoadingList } = useSelector(({ posts }) => ({
+    PostsList: posts.PostsList,
+    LoadingList: posts.LoadingList
   }))
   const [Post, setPost] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -19,6 +20,10 @@ function DetailPost(props) {
   const { onOpen } = useContext(PostsContext)
   const navigate = useNavigate()
   const { slug, cateid, cate } = useParams()
+
+  useEffect(() => {
+    LoadingList && setLoading(true)
+  }, [LoadingList])
 
   useEffect(() => {
     if (cateid) {
@@ -37,10 +42,12 @@ function DetailPost(props) {
       navigate(`/${cate}-${cateid}/${PostsList[0].Items[0].slug}.html`)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [slug, PostsList])
+  }, [PostsList])
 
   useEffect(() => {
-    getDetailPost()
+    if (slug) {
+      getDetailPost()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug])
 
