@@ -5,6 +5,7 @@ import { NavLink, useParams } from 'react-router-dom'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import clsx from 'clsx'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import { useEffect } from 'react'
 
 const perfectScrollbarOptions = {
   wheelSpeed: 2,
@@ -56,24 +57,37 @@ const perfectScrollbarOptions = {
 // }
 
 function NavItems({ cate, onChangeCate, CateActive, STT }) {
-  // const [active, setActive] = useState(false)
-  const { cate: cates, cateid } = useParams()
+  const [active, setActive] = useState(false)
+  const { cate: cates, faqid, cateid } = useParams()
 
-  // useEffect(() => {
-  //   if (cate.Items) {
-  //     const index = cate.Items.findIndex(post => post.slug === slug)
-  //     if (index > -1) {
-  //       setActive(true)
-  //     } else {
-  //       setActive(false)
-  //     }
-  //   }
-  // }, [cate, slug])
+  useEffect(() => {
+    if (faqid && Number(faqid) === Number(cate.id)) {
+      setActive(true)
+    } else {
+      setActive(false)
+    }
+
+    if (!faqid) {
+      if (Number(cate.id) === Number(cateid)) {
+        setActive(true)
+      }
+      else {
+        setActive(false)
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cate, faqid])
 
   return (
-    <li className={clsx('active')}>
+    <li className={clsx(active && 'active-color', 'active')}>
       {/* onClick={() => onChangeActive(cate)} */}
-      <NavLink to={`${cate.slug}-${cate.id}`}>
+      <NavLink
+        to={
+          STT > 0
+            ? `${cates}-${cateid}/${cate.slug}-${cate.id}`
+            : `${cate.slug}-${cate.id}`
+        }
+      >
         {/* <span className="svg-icon">
           <SVG
             src={AssetsHelpers.toAbsoluteUrl(
@@ -86,7 +100,7 @@ function NavItems({ cate, onChangeCate, CateActive, STT }) {
           {/* <span className="number font-lating">{convertRoman(STT + 1)}.</span> */}
           {cate.name}
         </span>
-        <i className="menu-arrow"></i>
+        {/* {cate.Items && cate.Items.length > 0 && <i className="menu-arrow"></i>} */}
       </NavLink>
       <ul>
         {cate.Items &&
@@ -115,7 +129,6 @@ function SidebarLeft(props) {
     LoadingList: posts.LoadingList
   }))
   const [CateActive, setCateActive] = useState()
-
   const onChangeCate = patch => {
     setCateActive(prevState => (prevState === patch ? '' : patch))
   }

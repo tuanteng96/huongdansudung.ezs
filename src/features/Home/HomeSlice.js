@@ -16,7 +16,8 @@ export const getListPostsID = createAsyncThunk(
     try {
       const { data: ListPosts } = await postsApi.getListPostsID(id)
       const { data: CurrentCate } = await postsApi.getCateID(id)
-      return [
+      const { data: ListCate } = await postsApi.getListParentCate(id)
+      let result = [
         {
           ...CurrentCate,
           Items: ListPosts
@@ -24,6 +25,19 @@ export const getListPostsID = createAsyncThunk(
             : []
         }
       ]
+      if (ListCate && ListCate.length > 0) {
+        const ids = ListCate[0].id
+        result = result.map(item => ({
+          ...item,
+          Items: ListPosts
+            ? ListPosts.filter(o => !o.categories.includes(ids)).sort(
+                (a, b) => a?.acf?.vi_tri - b?.acf?.vi_tri
+              )
+            : []
+        }))
+        result.push(ListCate[0])
+      }
+      return result
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
     }

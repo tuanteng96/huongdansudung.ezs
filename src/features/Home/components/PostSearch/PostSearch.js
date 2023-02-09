@@ -89,11 +89,25 @@ function PostSearch(props) {
                   <div className="filter-key" key={index}>
                     <div
                       onClick={() => {
-                        navigate(
-                          `/${item.cate[item.cate.length - 1].slug}-${
-                            item.cate[item.cate.length - 1].id
-                          }/${item.slug}.html`
-                        )
+                        if (
+                          item.cate[item.cate.length - 1].slug.indexOf(
+                            'cau-hoi'
+                          ) > -1
+                        ) {
+                          navigate(
+                            `/${item.cate[0].slug}-${item.cate[0].id}/${
+                              item.cate[item.cate.length - 1].slug
+                            }-${item.cate[item.cate.length - 1].id}/${
+                              item.slug
+                            }.html`
+                          )
+                        } else {
+                          navigate(
+                            `/${item.cate[item.cate.length - 1].slug}-${
+                              item.cate[item.cate.length - 1].id
+                            }/${item.slug}.html`
+                          )
+                        }
                         setShow(false)
                         setList(false)
                         setVal('')

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import Home from 'src/features/Home/Home'
 import DetailPost from 'src/features/Home/pages/DetailPost'
+import FAQCate from 'src/features/Home/pages/FAQCate/FAQCate'
 
 function Routers(props) {
   const [UrlHome, setUrlHome] = useState('')
@@ -23,6 +24,11 @@ function Routers(props) {
         <Route path=":cate-:cateid" element={<DetailPost />}>
           <Route path=":slug.html" element={<DetailPost />} />
         </Route>
+        <Route path=":cate-:cateid/:faq-:faqid" element={<FAQCate />}></Route>
+        <Route
+          path=":cate-:cateid/:faq-:faqid/:slug.html"
+          element={<DetailPost />}
+        />
       </Route>
     </Routes>
   )
