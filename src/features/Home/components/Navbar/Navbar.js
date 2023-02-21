@@ -11,8 +11,9 @@ const perfectScrollbarOptions = {
 }
 
 function Navbar(props) {
-  const { PostsCate } = useSelector(({ posts }) => ({
-    PostsCate: posts.PostsCate
+  const { PostsCate, LoadingList } = useSelector(({ posts }) => ({
+    PostsCate: posts.PostsCate,
+    LoadingList: posts.LoadingList
   }))
   const [CountSlice, setCountSlice] = useState(5)
 
@@ -29,6 +30,10 @@ function Navbar(props) {
     }
   }
 
+  const handleClick = e => {
+    if (LoadingList) e.preventDefault()
+  }
+
   return (
     <Fragment>
       <ul className="nav-menu h-100 d-none d-md-flex">
@@ -36,6 +41,7 @@ function Navbar(props) {
           PostsCate.slice(0, CountSlice).map((item, index) => (
             <li key={index}>
               <NavLink
+                onClick={handleClick}
                 to={`/${item.slug}-${item.id}`}
                 //className={clsx(cate === item.slug && 'active')}
               >
@@ -67,6 +73,7 @@ function Navbar(props) {
                   (item, index) => (
                     <li key={index}>
                       <NavLink
+                        onClick={handleClick}
                         to={`/${item.slug}-${item.id}`}
                         //className={clsx(cate === item.slug && 'active')}
                       >
@@ -100,6 +107,7 @@ function Navbar(props) {
                   href={`/${item.slug}-${item.id}`}
                   key={index}
                   active={item.slug === cate}
+                  onClick={handleClick}
                 >
                   <span
                     dangerouslySetInnerHTML={{

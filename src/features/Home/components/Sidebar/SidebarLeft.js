@@ -58,7 +58,7 @@ const perfectScrollbarOptions = {
 
 function NavItems({ cate, onChangeCate, CateActive, STT }) {
   const [active, setActive] = useState(false)
-  const { cate: cates, faqid, cateid } = useParams()
+  const { cate: cates, faqid, cateid, slug } = useParams()
 
   useEffect(() => {
     if (faqid && Number(faqid) === Number(cate.id)) {
@@ -70,8 +70,7 @@ function NavItems({ cate, onChangeCate, CateActive, STT }) {
     if (!faqid) {
       if (Number(cate.id) === Number(cateid)) {
         setActive(true)
-      }
-      else {
+      } else {
         setActive(false)
       }
     }
@@ -106,7 +105,10 @@ function NavItems({ cate, onChangeCate, CateActive, STT }) {
         {cate.Items &&
           cate.Items.map((item, idx) => (
             <li key={idx}>
-              <NavLink to={`${cates}-${cateid}/${item.slug}.html`}>
+              <NavLink
+                className={clsx(!slug && idx === 0 && 'active')}
+                to={`${cates}-${cateid}/${item.slug}.html`}
+              >
                 {/* <i className="menu-bullet menu-bullet-dot">
                   <span></span>
                 </i> */}
